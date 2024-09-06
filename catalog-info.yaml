@@ -6,7 +6,7 @@ spec:
   type: service
   lifecycle: production
   owner: "manwendra-hotmail"
-  system: retail-store
+  system: service-now
   providesApis:
     - service-now-api
 ---
