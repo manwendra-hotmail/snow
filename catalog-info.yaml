@@ -29,6 +29,6 @@ spec:
   type: openapi
   lifecycle: production
   owner: "manwendra-hotmail"
-  system: retail-store
+  system: service-now
   definition:
     $text: ./openapi.yaml
