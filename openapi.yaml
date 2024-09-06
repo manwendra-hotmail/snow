@@ -6,8 +6,9 @@ info:
 externalDocs:
     url: 'https://docs.servicenow.com/?context=CSHelp:REST-Table-API'
 servers:
-    -
-        url: 'https://dev139850.service-now.com/'
+    - url: 'https://ibmksademo1.service-now.com/'
+    - url: 'https://dev139850.service-now.com/'
+    
 paths:
     '/api/now/table/{tableName}':
         get:
