@@ -42,7 +42,7 @@ metadata:
   tags:
     - servicenow
 spec:
-  owner: backstage/techdocs-core
+  owner: "manwendra-hotmail"
   type: service
   parameters:
     - title: Provide some simple information
