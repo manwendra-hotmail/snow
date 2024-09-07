@@ -60,6 +60,5 @@ spec:
       action: servicenow:now:table:retrieveRecords
       input:
         #url: https://ibmksademo1.service-now.com/
-        values:
-          tableName: ${{ parameters.tableName }}
+        tableName: ${{ parameters.tableName }}
 
