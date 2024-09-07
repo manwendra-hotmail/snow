@@ -61,4 +61,6 @@ spec:
       input:
         #url: https://ibmksademo1.service-now.com/
         tableName: ${{ parameters.tableName }}
-
+ output:
+ - title: Records       
+   entityRef: ${{ steps.fetch.output.result }}
