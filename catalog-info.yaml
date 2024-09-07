@@ -59,7 +59,7 @@ spec:
       name: Template Fetch Ticket Skeleton
       action: servicenow:now:table:retrieveRecords
       input:
-        url: https://ibmksademo1.service-now.com/
+        #url: https://ibmksademo1.service-now.com/
         values:
           tableName: ${{ parameters.tableName }}
 
