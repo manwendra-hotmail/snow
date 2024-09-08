@@ -63,5 +63,4 @@ spec:
       tableName: ${{ parameters.tableName }}
   output:
     text:
-      - title: Result
-        content: ${{ steps.fetch.result }}
+      - content: ${{ steps.fetch.output }}
