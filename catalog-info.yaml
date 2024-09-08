@@ -64,4 +64,4 @@ spec:
   output:
     text::
     - title: Records       
-      content: ${{ steps.fetch.output.tableName }}
+      content: ${{ steps.fetch.output }}
