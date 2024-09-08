@@ -38,7 +38,7 @@ kind: Template
 metadata:
   name: service-now-template
   title: ServiceNow Template
-  description: Create a new ticket in servicenow
+  description: Fetch incidents from servicenow
   tags:
     - servicenow
 spec:
@@ -62,6 +62,6 @@ spec:
       #url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
   output:
-    links::
+    $text::
     - title: Records
       content: ${{ steps.fetch.output.tableName }}
