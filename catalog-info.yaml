@@ -62,6 +62,6 @@ spec:
       #url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
   output:
-    test:
+    text:
       - title: Result
         content: ${{ steps.publish.output.tableName }}
