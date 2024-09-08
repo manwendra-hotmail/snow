@@ -45,23 +45,24 @@ spec:
   owner: "manwendra-hotmail"
   type: service
   parameters:
-    - title: Provide some simple information
-      required:
-        - tableName
-      properties:
-        tableName:
-          title: Table Name
-          type: string
-          description: Unique name of the component
-          ui:field: EntityNamePicker
+  - title: Provide some simple information
+    required:
+     - tableName
+    properties:
+      tableName:
+        title: Table Name
+        type: string
+        description: Unique name of the component
+        ui:field: EntityNamePicker
   steps:
-    - id: fetch
-      name: Template Fetch Ticket Skeleton
-      action: servicenow:now:table:retrieveRecords
-      input:
-        #url: https://ibmksademo1.service-now.com/
-        tableName: ${{ parameters.tableName }}
+  - id: fetch
+    name: Template Fetch Ticket Skeleton
+    action: servicenow:now:table:retrieveRecords
+    input:
+      #url: https://ibmksademo1.service-now.com/
+      tableName: ${{ parameters.tableName }}
   output:
     text::
-    - title: Records       
-      content: ${{ steps.fetch.output }}
+    - title: Records
+      type: string
+      content: ${{ steps.fetch.output.result }}
