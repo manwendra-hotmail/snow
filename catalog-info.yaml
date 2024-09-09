@@ -9,6 +9,9 @@ spec:
   system: service-now
   providesApis:
     - service-now-api
+  tags:
+    - itsm-SNOW
+    - ocp-snow-integration
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
