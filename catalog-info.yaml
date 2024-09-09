@@ -36,11 +36,12 @@ spec:
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: service-now-template
-  title: ServiceNow Template
+  name: servicenow-fetch-template
+  title: ServiceNow Fetch Template
   description: Fetch incidents from servicenow
   tags:
     - servicenow
+    - fetch
 spec:
   owner: "manwendra-hotmail"
   type: service
@@ -63,3 +64,158 @@ spec:
       tableName: ${{ parameters.tableName }}
   output:
     result: ${{ steps.fetch.output.result }}
+
+---
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: servicenow-create-template
+  title: ServiceNow Create Template
+  description: Create incidents within servicenow
+  tags:
+    - servicenow
+    - create
+spec:
+  owner: "manwendra-hotmail"
+  type: service
+  parameters:
+  - title: Provide some mandatory details
+    required:
+     - tableName
+    properties:
+      tableName:
+        title: Table Name
+        type: string
+        description: Unique name of the component
+        ui:field: EntityNamePicker
+  steps:
+  - id: create
+    name: Template Create Ticket Skeleton
+    action: servicenow:now:table:createRecord
+    input:
+      #url: https://ibmksademo1.service-now.com/
+      tableName: ${{ parameters.tableName }}
+  output:
+    result: ${{ steps.create.output.result }}
+
+---
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: servicenow-modify-template
+  title: ServiceNow Modify Template
+  description: Modify incidents within servicenow
+  tags:
+    - servicenow
+    - modify
+spec:
+  owner: "manwendra-hotmail"
+  type: service
+  parameters:
+  - title: Provide some mandatory details
+    required:
+     - tableName
+     - sysId
+    properties:
+      tableName:
+        title: Table Name
+        type: string
+        description: Unique name of the component
+        ui:field: EntityNamePicker
+      sysId:
+        title: Sys ID
+        type: string
+        description: Unique ID of the component
+        ui:field: EntityNamePicker
+  steps:
+  - id: modify
+    name: Template Modify Ticket Skeleton
+    action: servicenow:now:table:modifyRecord
+    input:
+      #url: https://ibmksademo1.service-now.com/
+      tableName: ${{ parameters.tableName }}
+      tableName: ${{ parameters.sysId }}
+  output:
+    result: ${{ steps.modify.output.result }}
+
+
+---
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: servicenow-update-template
+  title: ServiceNow Update Template
+  description: Update incidents within servicenow
+  tags:
+    - servicenow
+    - update
+spec:
+  owner: "manwendra-hotmail"
+  type: service
+  parameters:
+  - title: Provide some mandatory details
+    required:
+     - tableName
+     - sysId
+    properties:
+      tableName:
+        title: Table Name
+        type: string
+        description: Unique name of the component
+        ui:field: EntityNamePicker
+      sysId:
+        title: Sys ID
+        type: string
+        description: Unique ID of the component
+        ui:field: EntityNamePicker
+  steps:
+  - id: update
+    name: Template Update Ticket Skeleton
+    action: servicenow:now:table:updateRecord
+    input:
+      #url: https://ibmksademo1.service-now.com/
+      tableName: ${{ parameters.tableName }}
+      tableName: ${{ parameters.sysId }}
+  output:
+    result: ${{ steps.update.output.result }}
+
+---
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: servicenow-delete-template
+  title: ServiceNow Delete Template
+  description: Delete incidents within servicenow
+  tags:
+    - servicenow
+    - delete
+spec:
+  owner: "manwendra-hotmail"
+  type: service
+  parameters:
+  - title: Provide some mandatory details
+    required:
+     - tableName
+     - sysId
+    properties:
+      tableName:
+        title: Table Name
+        type: string
+        description: Unique name of the component
+        ui:field: EntityNamePicker
+      sysId:
+        title: Sys ID
+        type: string
+        description: Unique ID of the component
+        ui:field: EntityNamePicker
+  steps:
+  - id: delete
+    name: Template Delete Ticket Skeleton
+    action: servicenow:now:table:deleteRecord
+    input:
+      #url: https://ibmksademo1.service-now.com/
+      tableName: ${{ parameters.tableName }}
+      tableName: ${{ parameters.sysId }}
+  output:
+    result: ${{ steps.delete.output.result }}
+
