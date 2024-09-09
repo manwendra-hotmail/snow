@@ -56,6 +56,7 @@ spec:
       tableName:
         title: Table Name
         type: string
+        default: 'incident'
         description: Unique name of the component
         ui:field: EntityNamePicker
   steps:
@@ -67,8 +68,8 @@ spec:
       tableName: ${{ parameters.tableName }}
   output:
     text: 
-    - title: Records
-      content: '${{ steps.fetch.output.result }}'
+    - title: Result
+      content: ${{ steps['fetch'].output }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
