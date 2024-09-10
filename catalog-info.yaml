@@ -43,7 +43,7 @@ kind: Template
 metadata:
   name: servicenow-fetch-template
   title: ServiceNow Fetch Template
-  description: Fetch incidents from servicenow
+  description: Fetch incidents from ServiceNow
   tags:
     - servicenow
     - fetch
@@ -51,7 +51,7 @@ spec:
   owner: "manwendra-hotmail"
   type: service
   parameters:
-  - title: Provide some simple information
+  - title: Provide table name information
     required:
      - tableName
     properties:
@@ -59,8 +59,7 @@ spec:
         title: Table Name
         type: string
         default: 'incident'
-        description: Name of the ServiceNow table to fetch records from (e.g., `incident` , `change`)
-        ui:field: EntityNamePicker
+        description: Name of the ServiceNow table to fetch records from (e.g., `incident`)
   steps:
   - id: fetch
     name: Fetch Incident Tickets
@@ -70,7 +69,7 @@ spec:
   output:
     ticketList: ${{ steps.fetch.output.data }}
     ticketUrls: |
-      ${{ steps.fetch.output.data.map(ticket => `Ticket: ${ticket.short_description}, URL: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${ticket.sys_id}`).join("\n") }}
+      ${{ steps.fetch.output.data.map(ticket => `Incident: ${ticket.number}, Short Description: ${ticket.short_description}, URL: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${ticket.sys_id}`).join("\n") }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
