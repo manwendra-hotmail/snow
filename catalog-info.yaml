@@ -57,24 +57,16 @@ spec:
         title: Table Name
         type: string
         default: 'incident'
-        description: Unique name of the component
+        description: Name of the ServiceNow table to fetch records from (e.g., `incident` , `change`)
         ui:field: EntityNamePicker
   steps:
   - id: fetch
-    name: Template Fetch Ticket Skeleton
+    name: Fetch Incident Tickets
     action: servicenow:now:table:retrieveRecords
     input:
-      #url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
-  - id: log-message
-    name: Log Message
-    action: debug:log
-    input:
-      values:
-        message: ${{ steps.fetch.output.result }}
-        
   output:
-    result: ${{ steps.log-message.parameters.message }}
+    ticketList: ${{ steps.fetch.output.data }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
