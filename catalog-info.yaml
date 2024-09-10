@@ -106,13 +106,12 @@ spec:
         description: Brief summary of the incident or record being created
   steps:
   - id: create
-    name: Template Create Ticket Skeleton
+    name: Template Create Incident Ticket
     action: servicenow:now:table:createRecord
     input:
       # url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
-      fields:
-        short_description: ${{ parameters.shortDescription }}
+      short_description: ${{ parameters.shortDescription }}
   output:
     ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${{ steps.create.output.sys_id }}
     result: ${{ steps.create.output.result }}
