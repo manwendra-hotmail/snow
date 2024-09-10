@@ -75,6 +75,7 @@ spec:
   output:
     result: ${{ steps.log-message.output.message }}
 
+
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
@@ -108,10 +109,12 @@ spec:
     name: Template Create Ticket Skeleton
     action: servicenow:now:table:createRecord
     input:
-      url: https://ibmksademo1.service-now.com/
+      # url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
-      short_description: ${{ parameters.shortDescription }}
+      fields:
+        short_description: ${{ parameters.shortDescription }}
   output:
+    ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${{ steps.create.output.sys_id }}
     result: ${{ steps.create.output.result }}
 
 ---
