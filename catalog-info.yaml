@@ -66,11 +66,8 @@ spec:
     input:
       tableName: ${{ parameters.tableName }}
   output:
-    tickets: >
-      ${{ steps.fetch.output.result
-        | map(ticket => 
-          `Incident Number: ${ticket.number}, Short Description: ${ticket.short_description}, URL: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${ticket.sys_id}`)
-        | join("\n") }}
+    rawResult: ${{ steps.fetch.output.result }}
+    tickets: ${{ steps.fetch.output.result | join("\n") }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
