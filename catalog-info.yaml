@@ -35,6 +35,8 @@ spec:
   system: service-now
   definition:
     $text: ./openapi.yaml
+
+
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
@@ -67,6 +69,8 @@ spec:
       tableName: ${{ parameters.tableName }}
   output:
     ticketList: ${{ steps.fetch.output.data }}
+    ticketUrls: |
+      ${{ steps.fetch.output.data.map(ticket => `Ticket: ${ticket.short_description}, URL: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${ticket.sys_id}`).join("\n") }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
