@@ -70,10 +70,10 @@ spec:
     name: Log Message
     action: debug:log
     input:
-      message: ${{ steps.fetch.output.result }}
+      each: ${{ steps.fetch.output.result }}
         
   output:
-    text: ${{ steps.log-message.output.message }}
+    text: ${{ steps.log-message.output.each.value }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
