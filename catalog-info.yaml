@@ -111,9 +111,15 @@ spec:
       tableName: ${{ parameters.tableName }}
       requestBody:
         short_description: ${{ parameters.shortDescription }}
+  - id: fetch
+    name: Fetch Created Ticket Information
+    action: servicenow:now:table:getRecord
+    input:
+      tableName: ${{ parameters.tableName }}
+      sys_id: ${{ steps.create.output.sys_id }}
   output:
     ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${{ steps.create.output.sys_id }}
-    result: ${{ steps.create.output }}
+    ticketDetails: ${{ steps.fetch.output }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
