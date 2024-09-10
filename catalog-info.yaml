@@ -74,7 +74,7 @@ spec:
         
   output:
     result: ${{ steps.log-message.output.each.key }}
-    values: 
+    text: 
       info: ${{ steps.log-message.output.each.value }}
 
 ---
