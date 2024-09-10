@@ -69,7 +69,7 @@ spec:
   output:
     text: 
     - title: Result
-      content: ${{ steps['fetch'].output }}
+      content: '${{ steps.fetch.output.result }}'
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
