@@ -92,23 +92,27 @@ spec:
   - title: Provide some mandatory details
     required:
      - tableName
+     - shortDescription
     properties:
       tableName:
         title: Table Name
         type: string
         description: Unique name of the component
         ui:field: EntityNamePicker
+      shortDescription:
+        title: Short Description
+        type: string
+        description: Brief summary of the incident or record being created
   steps:
   - id: create
     name: Template Create Ticket Skeleton
     action: servicenow:now:table:createRecord
     input:
-      #url: https://ibmksademo1.service-now.com/
+      url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
+      short_description: ${{ parameters.shortDescription }}
   output:
-    ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=${{ steps.create.output.sys_id }}
     result: ${{ steps.create.output.result }}
-
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
