@@ -68,8 +68,7 @@ spec:
       tableName: ${{ parameters.tableName }}
   output:
     each: '${{ steps.fetch.output.result }}'
-    values:
-      result: ${{ each.value }}
+    result: ${{ each.value }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
