@@ -74,7 +74,7 @@ spec:
         message: ${{ steps.fetch.output.result }}
         
   output:
-    result: ${{ steps.log-message.message }}
+    result: ${{ steps.log-message.parameters.message }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
