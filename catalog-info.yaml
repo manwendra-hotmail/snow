@@ -106,7 +106,9 @@ spec:
       #url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
   output:
+    ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=${{ steps.create.output.sys_id }}
     result: ${{ steps.create.output.result }}
+
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
