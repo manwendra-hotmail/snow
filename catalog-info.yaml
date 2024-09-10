@@ -111,7 +111,7 @@ spec:
     input:
       # url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
-      short_description: ${{ parameters.shortDescription }}
+      # short_description: ${{ parameters.shortDescription }}
   output:
     ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${{ steps.create.output.sys_id }}
     result: ${{ steps.create.output.result }}
