@@ -70,7 +70,8 @@ spec:
     name: Log Message
     action: debug:log
     input:
-      message: ${{ steps.fetch.output.result }}
+      values:
+        message: ${{ steps.fetch.output.result }}
         
   output:
     result: ${{ steps.log-message.output.message }}
