@@ -67,6 +67,7 @@ spec:
     input:
       tableName: ${{ parameters.tableName }}
   output:
+    rawResult: ${{ steps.fetch.output }}
     ticketList: ${{ steps.fetch.output.data }}
     ticketUrls: |
       ${{ steps.fetch.output.data.map(ticket => `Incident: ${ticket.number}, Short Description: ${ticket.short_description}, URL: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${ticket.sys_id}`).join("\n") }}
