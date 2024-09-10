@@ -113,7 +113,7 @@ spec:
         short_description: ${{ parameters.shortDescription }}
   - id: fetch
     name: Fetch Created Ticket Information
-    action: servicenow:now:table:getRecord
+    action: servicenow:now:table:retrieveRecord
     input:
       tableName: ${{ parameters.tableName }}
       sys_id: ${{ steps.create.output.sys_id }}
