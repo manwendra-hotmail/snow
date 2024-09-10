@@ -67,7 +67,9 @@ spec:
       #url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
   output:
-    result: '${{ steps.fetch.output.result }}'
+    each: '${{ steps.fetch.output.result }}'
+    values:
+      result: ${{ each.value }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
