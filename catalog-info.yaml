@@ -66,9 +66,14 @@ spec:
     input:
       #url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
+  - id: log-message
+    name: Log Message
+    action: debug:log
+    input:
+      message: ${{ steps.fetch.output.result }}
+        
   output:
-    each: '${{ steps.fetch.output.result }}'
-    result: ${{ each.value }}
+    result: ${{ steps.log-message.output.message }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
