@@ -73,9 +73,7 @@ spec:
       each: ${{ steps.fetch.output.result }}
         
   output:
-    result: ${{ steps.log-message.output.each.key }}
-    text: 
-    - result: ${{ steps.log-message.output.each.value }}
+    result: ${{ steps.log-message.parameters.each.value }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
