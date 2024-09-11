@@ -71,7 +71,7 @@ spec:
     input:
       data:
         items: ${{ steps.fetch.output.result }}
-        expression: '$ ~> | $ | { "items": [*] }|'
+      expression: '$ ~> | $ | { "items": [*] }|'
   - id: preview
     name: preview
     action: debug:log
