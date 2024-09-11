@@ -65,12 +65,6 @@ spec:
     action: servicenow:now:table:retrieveRecords
     input:
       tableName: ${{ parameters.tableName }}
-  - id: serialize
-      name: serialize
-      action: roadiehq:utils:serialize:yaml
-      input:
-        data:
-          tickets: ${{ steps.fetch.output.result }}
   - id: jsonata
     name: Parse File
     action: roadiehq:utils:jsonata
