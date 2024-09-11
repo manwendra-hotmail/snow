@@ -71,12 +71,19 @@ spec:
       input:
         data:
           tickets: ${{ steps.fetch.output.result }}
+  - id: jsonata
+    name: Parse File
+    action: roadiehq:utils:jsonata
+    input:
+      data:
+        items: ${{ steps.fetch.output.result }}
+        expression: '$ ~> | $ | { "items": [*] }|'
   - id: preview
     name: preview
     action: debug:log
     input:
       listWorkspace: true
-      message: ${{ steps.serialize.output.serialized }}
+      message: ${{ steps.jsonata.output.result }}
   output:
     # Output the raw result for debugging
     # rawResult: ${{ steps.fetch.output.result }}
