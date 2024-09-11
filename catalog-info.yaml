@@ -70,8 +70,7 @@ spec:
     action: roadiehq:utils:jsonata
     input:
       data:
-        items:
-         - '${{ steps.fetch.output.result }}'
+        items: '${{ steps.fetch.output.result }}'
       expression: '$ ~> | $ | { "items": [item1, "item2"] }|'
   output:
     # Output the raw result for debugging
