@@ -67,6 +67,7 @@ spec:
       tableName: ${{ parameters.tableName }}
   output:
     text:
+    - title: Incidents
       content: ${{ steps.fetch.output.result }}
     # Output the raw result for debugging
     rawResult: ${{ steps.fetch.output.result }}
