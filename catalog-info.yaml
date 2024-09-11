@@ -66,6 +66,8 @@ spec:
     input:
       tableName: ${{ parameters.tableName }}
   output:
+    text:
+      content: ${{ steps.fetch.output.result }}
     # Output the raw result for debugging
     rawResult: ${{ steps.fetch.output.result }}
     # Output tickets in a simple format
