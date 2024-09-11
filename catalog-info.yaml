@@ -77,22 +77,21 @@ spec:
     action: roadiehq:utils:fs:write
     input:
       path: ./data.json
-      content: ${{ steps.serialize.output.serialized }}
+      tickets: ${{ steps.serialize.output.serialized }}
 
   - id: transform
     name: transform
     action: roadiehq:utils:jsonata:json:transform
     input:
       path: ${{ steps['write'].output.path }}
-      expression: '$ ~> | $ | { "content": [*] }|'
+      expression: '$ ~> | $ | { "tickets": [*] }|'
       
   - id: preview
     name: preview
     action: debug:log
     input:
       listWorkspace: true
-      message: |
-          Result: `${{ steps['transform'].output.result }}`
+      message: `${{ steps['transform'].output.result }}`
   output:
     # Output the raw result for debugging
     # rawResult: ${{ steps.fetch.output.result }}
