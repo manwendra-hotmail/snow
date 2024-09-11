@@ -65,19 +65,27 @@ spec:
     action: servicenow:now:table:retrieveRecords
     input:
       tableName: ${{ parameters.tableName }}
-  - id: jsonata
-    name: Parse File
-    action: roadiehq:utils:jsonata
+  - id: write
+    name: Write
+    action: roadiehq:utils:fs:write
     input:
-      data:
-        items: ${{ steps.fetch.output.result }}
-      expression: '$ ~> | $ | { "items": [*] }|'
+      path: ./data.json
+      content: ${{ steps.fetch.output.result }}
+
+  - id: transform
+    name: transform
+    action: roadiehq:utils:jsonata:json:transform
+    input:
+      path: ${{ steps['write'].output.path }}
+      expression: '$ ~> | $ | { "result": [*] }|'
+      
   - id: preview
     name: preview
     action: debug:log
     input:
       listWorkspace: true
-      message: ${{ steps.jsonata.output.result }}
+      message: |
+          Result: `${{ steps['transform'].output.result }}`
   output:
     # Output the raw result for debugging
     # rawResult: ${{ steps.fetch.output.result }}
