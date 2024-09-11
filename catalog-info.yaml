@@ -70,7 +70,7 @@ spec:
     action: roadiehq:utils:serialize:json #roadiehq:utils:jsonata
     input:
       data: 
-      - '${{ steps.fetch.output.result }}'
+        - '${{ steps.fetch.output.result }}'
       #expression: '$ ~> | $ | { "items": [*] }|'
   output:
     # Output the raw result for debugging
