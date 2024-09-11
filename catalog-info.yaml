@@ -163,13 +163,14 @@ spec:
     ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${{ parameters.sysId }}
     result: ${{ steps.modify.output }}
 
+
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: servicenow-update-template
   title: ServiceNow Update Template
-  description: Update incidents within servicenow
+  description: Update details of an existing ticket in ServiceNow
   tags:
     - servicenow
     - update
@@ -177,31 +178,37 @@ spec:
   owner: "manwendra-hotmail"
   type: service
   parameters:
-  - title: Provide some mandatory details
+  - title: Provide details to update
     required:
      - tableName
      - sysId
+     - shortDescription
     properties:
       tableName:
         title: Table Name
         type: string
-        description: Unique name of the component
-        ui:field: EntityNamePicker
+        description: Name of the table in ServiceNow (e.g., `incident`)
       sysId:
-        title: Sys ID
+        title: Ticket Sys ID
         type: string
-        description: Unique ID of the component
-        ui:field: EntityNamePicker
+        description: Get ticket Sys ID from here - https://ibmksademo1.service-now.com/api/now/table/incident?sysparm_fields=sys_id,number
+      shortDescription:
+        title: New Short Description
+        type: string
+        description: New short description of the ticket
   steps:
   - id: update
-    name: Template Update Ticket Skeleton
+    name: Update Incident in ServiceNow
     action: servicenow:now:table:updateRecord
     input:
-      #url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
       sysId: ${{ parameters.sysId }}
+      requestBody:
+        short_description: ${{ parameters.shortDescription }}
   output:
-    result: ${{ steps.update.output.result }}
+    ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${{ parameters.sysId }}
+    result: ${{ steps.update.output }}
+
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
