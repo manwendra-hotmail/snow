@@ -69,7 +69,7 @@ spec:
     # Output the raw result for debugging
     # rawResult: ${{ steps.fetch.output.result }}
     each: ${{ steps.fetch.output.result }}
-    values:
+    text:
       tickets: ${{ each.value }}
     # Output tickets in a simple format
     # tickets: ${{ steps.fetch.output.result | join(",") }}
