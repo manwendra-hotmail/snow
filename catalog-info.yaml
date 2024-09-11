@@ -119,7 +119,7 @@ kind: Template
 metadata:
   name: servicenow-modify-template
   title: ServiceNow Modify Template
-  description: Modify incidents within servicenow
+  description: Modify details of an existing ticket in ServiceNow
   tags:
     - servicenow
     - modify
@@ -127,32 +127,36 @@ spec:
   owner: "manwendra-hotmail"
   type: service
   parameters:
-  - title: Provide some mandatory details
+  - title: Provide details to modify
     required:
      - tableName
      - sysId
+     - shortDescription
     properties:
       tableName:
         title: Table Name
         type: string
-        description: Unique name of the component
-        ui:field: EntityNamePicker
+        description: Name of the table in ServiceNow (e.g., `incident`)
       sysId:
-        title: Sys ID
+        title: Ticket Sys ID
         type: string
-        description: Unique ID of the component
-        ui:field: EntityNamePicker
+        description: Sys ID of the ticket to be modified
+      shortDescription:
+        title: New Short Description
+        type: string
+        description: New short description of the ticket
   steps:
   - id: modify
-    name: Template Modify Ticket Skeleton
+    name: Modify Incident in ServiceNow
     action: servicenow:now:table:modifyRecord
     input:
-      #url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
       sysId: ${{ parameters.sysId }}
+      requestBody:
+        short_description: ${{ parameters.shortDescription }}
   output:
-    result: ${{ steps.modify.output.result }}
-
+    ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${{ parameters.sysId }}
+    result: ${{ steps.modify.output }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
