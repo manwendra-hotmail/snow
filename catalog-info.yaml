@@ -77,7 +77,7 @@ spec:
     action: roadiehq:utils:jsonata:json:transform
     input:
       path: ${{ steps['write'].output.path }}
-      expression: '$ ~> | $ | { "result": [*] }|'
+      expression: '$ ~> | $ | { "content": [*] }|'
       
   - id: preview
     name: preview
