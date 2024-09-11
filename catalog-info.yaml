@@ -236,7 +236,7 @@ spec:
       sysId:
         title: Ticket Sys ID
         type: string
-        description: Note! given Sys ID ticket will be deleted. Get ticket Sys ID from here - https://ibmksademo1.service-now.com/api/now/table/incident?sysparm_fields=sys_id,number
+        description: Sys ID of the ticket to be deleted
   steps:
   - id: delete
     name: Delete Incident in ServiceNow
@@ -245,4 +245,5 @@ spec:
       tableName: ${{ parameters.tableName }}
       sysId: ${{ parameters.sysId }}
   output:
-    result: "Ticket with Sys ID ${{ parameters.sysId }} has been deleted."
+    result: ${{ steps.delete.output || 'Ticket with Sys ID ' + parameters.sysId + ' has been deleted.' }}
+    error: ${{ steps.delete.error }}
