@@ -66,12 +66,15 @@ spec:
     input:
       tableName: ${{ parameters.tableName }}
   - id: preview
-    name: Preview
-    action: debug:preview
+    name: preview
+    action: debug:log
+    input:
+      listWorkspace: true
+      message: ${{ steps['fetch'].output.result }}
   output:
     # Output the raw result for debugging
     # rawResult: ${{ steps.fetch.output.result }}
-    tickets: ${{ steps.preview.output.directoryContents }}
+    tickets: ${{ steps.preview.output.message }}
     # Output tickets in a simple format
     # tickets: ${{ steps.fetch.output.result | join(",") }}
 
