@@ -236,7 +236,7 @@ spec:
       sysId:
         title: Ticket Sys ID
         type: string
-        description: Sys ID of the ticket to be deleted
+        description: Get ticket Sys ID from here - https://ibmksademo1.service-now.com/api/now/table/incident?sysparm_fields=sys_id,number
   steps:
   - id: delete
     name: Delete Incident in ServiceNow
