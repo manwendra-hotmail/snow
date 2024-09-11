@@ -69,8 +69,7 @@ spec:
     name: Parse File
     action: roadiehq:utils:serialize:json #roadiehq:utils:jsonata
     input:
-      data:
-        ticket: '${{ steps.fetch.output.result }}'
+      data: '${{ steps.fetch.output.result }}'
       #expression: '$ ~> | $ | { "items": [*] }|'
   output:
     # Output the raw result for debugging
