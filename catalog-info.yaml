@@ -66,13 +66,10 @@ spec:
     input:
       tableName: ${{ parameters.tableName }}
   output:
-    text:
-    - title: Incidents
-      content: ${{ steps.fetch.output.result }}
     # Output the raw result for debugging
     rawResult: ${{ steps.fetch.output.result }}
     # Output tickets in a simple format
-    tickets: ${{ steps.fetch.output.result | join("\n\n") }}
+    tickets: ${{ steps.fetch.output.result | join(",") }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
