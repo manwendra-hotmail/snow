@@ -65,12 +65,19 @@ spec:
     action: servicenow:now:table:retrieveRecords
     input:
       tableName: ${{ parameters.tableName }}
+  - id: serialize
+    name: serialize
+    action: roadiehq:utils:serialize:json
+    input:
+      data:
+        '${{ steps.fetch.output.result }}'
+        
   - id: write
     name: Write
     action: roadiehq:utils:fs:write
     input:
       path: ./data.json
-      content: ${{ steps.fetch.output.result }}
+      content: ${{ steps.serialize.output.serialized }}
 
   - id: transform
     name: transform
