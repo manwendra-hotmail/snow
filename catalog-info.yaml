@@ -91,7 +91,7 @@ spec:
     action: debug:log
     input:
       listWorkspace: false
-      message: '${{ steps['transform'].output.result }}'
+      message: ${{ steps['transform'].output.result }}
   output:
     # Output the raw result for debugging
     # rawResult: ${{ steps.fetch.output.result }}
