@@ -67,10 +67,10 @@ spec:
       tableName: ${{ parameters.tableName }}
   - id: jsonata
     name: Parse File
-    action: roadiehq:utils:serialize:yaml #roadiehq:utils:jsonata
+    action: roadiehq:utils:serialize:json #roadiehq:utils:jsonata
     input:
       data:
-        items: '${{ steps.fetch.output.result }}'
+        ticket: '${{ steps.fetch.output.result }}'
       #expression: '$ ~> | $ | { "items": [*] }|'
   output:
     # Output the raw result for debugging
