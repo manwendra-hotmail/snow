@@ -65,10 +65,13 @@ spec:
     action: servicenow:now:table:retrieveRecords
     input:
       tableName: ${{ parameters.tableName }}
+  - id: preview
+    name: Preview
+    action: debug:preview
   output:
     # Output the raw result for debugging
-    rawResult: ${{ steps.fetch.output.result }}
-    # tickets: ${{ steps.jsonata.output.serialized }}
+    # rawResult: ${{ steps.fetch.output.result }}
+    tickets: ${{ steps.preview.output.directoryContents }}
     # Output tickets in a simple format
     # tickets: ${{ steps.fetch.output.result | join(",") }}
 
