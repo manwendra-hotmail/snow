@@ -67,7 +67,7 @@ spec:
       tableName: ${{ parameters.tableName }}
   output:
     # Output the raw result for debugging
-    rawResult: ${{ steps.fetch.result }}
+    rawResult: ${{ steps.fetch.output.result }}
     # tickets: ${{ steps.jsonata.output.serialized }}
     # Output tickets in a simple format
     # tickets: ${{ steps.fetch.output.result | join(",") }}
