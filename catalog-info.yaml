@@ -67,9 +67,12 @@ spec:
       tableName: ${{ parameters.tableName }}
   output:
     # Output the raw result for debugging
-    rawResult: ${{ steps.fetch.output.result }}
+    # rawResult: ${{ steps.fetch.output.result }}
+    each: ${{ steps.fetch.output.result }}
+    values:
+      tickets: ${{ each.value }}
     # Output tickets in a simple format
-    tickets: ${{ steps.fetch.output.result | join(",") }}
+    # tickets: ${{ steps.fetch.output.result | join(",") }}
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
