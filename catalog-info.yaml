@@ -145,7 +145,7 @@ spec:
       sysId:
         title: Ticket Sys ID
         type: string
-        description: Sys ID of the ticket to be modified
+        description: Get ticket Sys ID from here - https://ibmksademo1.service-now.com/api/now/table/incident?sysparm_fields=sys_id,number
       shortDescription:
         title: New Short Description
         type: string
@@ -216,7 +216,7 @@ kind: Template
 metadata:
   name: servicenow-delete-template
   title: ServiceNow Delete Template
-  description: Delete incidents within servicenow
+  description: Delete an existing ticket in ServiceNow
   tags:
     - servicenow
     - delete
@@ -224,7 +224,7 @@ spec:
   owner: "manwendra-hotmail"
   type: service
   parameters:
-  - title: Provide some mandatory details
+  - title: Provide details to delete
     required:
      - tableName
      - sysId
@@ -232,21 +232,17 @@ spec:
       tableName:
         title: Table Name
         type: string
-        description: Unique name of the component
-        ui:field: EntityNamePicker
+        description: Name of the table in ServiceNow (e.g., `incident`)
       sysId:
-        title: Sys ID
+        title: Ticket Sys ID
         type: string
-        description: Unique ID of the component
-        ui:field: EntityNamePicker
+        description: Note! given Sys ID ticket will be deleted. Get ticket Sys ID from here - https://ibmksademo1.service-now.com/api/now/table/incident?sysparm_fields=sys_id,number
   steps:
   - id: delete
-    name: Template Delete Ticket Skeleton
+    name: Delete Incident in ServiceNow
     action: servicenow:now:table:deleteRecord
     input:
-      #url: https://ibmksademo1.service-now.com/
       tableName: ${{ parameters.tableName }}
       sysId: ${{ parameters.sysId }}
   output:
-    result: ${{ steps.delete.output.result }}
-
+    result: "Ticket with Sys ID ${{ parameters.sysId }} has been deleted."
