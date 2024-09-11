@@ -65,12 +65,18 @@ spec:
     action: servicenow:now:table:retrieveRecords
     input:
       tableName: ${{ parameters.tableName }}
+  - id: serialize
+      name: serialize
+      action: roadiehq:utils:serialize:yaml
+      input:
+        data:
+          tickets: ${{ steps.fetch.output.result }}
   - id: preview
     name: preview
     action: debug:log
     input:
       listWorkspace: true
-      message: ${{ steps['fetch'].output.result }}
+      message: ${{ steps.serialize.output.serialized }}
   output:
     # Output the raw result for debugging
     # rawResult: ${{ steps.fetch.output.result }}
