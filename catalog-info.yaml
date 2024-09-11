@@ -96,8 +96,8 @@ spec:
     # Output the raw result for debugging
     # rawResult: ${{ steps.fetch.output.result }}
     text: 
-    - title: Tickets
-     content: ${{ steps.preview.output.message }}
+      - title: Tickets
+        content: ${{ steps.preview.output.message }}
     # Output tickets in a simple format
     # tickets: ${{ steps.fetch.output.result | join(",") }}
 
