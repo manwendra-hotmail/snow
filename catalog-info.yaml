@@ -92,15 +92,11 @@ spec:
     input:
       listWorkspace: false
       message: ${{ steps['transform'].output.result }}
-  - id: read-file
-    name: Read File
-    action: fs:read
-    input:
-      path: ./data.json
+
     # Output the raw result for debugging
     # rawResult: ${{ steps.fetch.output.result }}
   output:
-    tickets: ${{ steps['read-file'].output.content }}    
+    tickets: ${{ steps['transform'].output.result }}   
     #text: 
      # - title: ${{ steps.preview.output.message }}
       #  content: ${{ steps.preview.output.message }}
