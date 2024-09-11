@@ -99,7 +99,7 @@ spec:
     text: 
       - title: Tickets
         content: |
-           '${{ steps['transform'].output.result }}'
+           ${{ steps['transform'].output.result }}
            # '${{ steps.preview.output.message }}'
     # Output tickets in a simple format
     # tickets: ${{ steps.fetch.output.result | join(",") }}
