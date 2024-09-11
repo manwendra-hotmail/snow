@@ -98,7 +98,8 @@ spec:
   output: 
     text: 
       - title: Tickets
-        content: ${{ steps.preview.output.message }}
+        content: |
+           '${{ steps.preview.output.message }}'
     # Output tickets in a simple format
     # tickets: ${{ steps.fetch.output.result | join(",") }}
 
