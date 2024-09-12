@@ -113,7 +113,7 @@ spec:
             <tbody>
               {{#each steps.transform.output.result}}
                 <tr>
-                  <td>{{{ this.number }}}</td>
+                  <td>{{ this.number }}</td>
                   <td>{{ this.short_description }}</td>
                   <td>{{ this.state }}</td>
                   <td>{{ this.priority }}</td>
@@ -122,6 +122,7 @@ spec:
               {{/each}}
             </tbody>
           </table>
+
 
 
 ---
