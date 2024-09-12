@@ -118,6 +118,7 @@ spec:
       tableName:
         title: Table Name
         type: string
+        default: 'incident'
         description: Name of the table in ServiceNow (e.g., `incident`)
       shortDescription:
         title: Short Description
@@ -158,6 +159,7 @@ spec:
       tableName:
         title: Table Name
         type: string
+        default: 'incident'
         description: Name of the table in ServiceNow (e.g., `incident`)
       sysId:
         title: Ticket Sys ID
@@ -204,6 +206,7 @@ spec:
       tableName:
         title: Table Name
         type: string
+        default: 'incident'
         description: Name of the table in ServiceNow (e.g., `incident`)
       sysId:
         title: Ticket Sys ID
