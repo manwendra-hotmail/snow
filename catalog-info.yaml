@@ -89,7 +89,8 @@ spec:
       
   output: 
     text: 
-      - content: |
+      - title: Incidents
+        content: |
            ${{ steps['transform'].output.result }}
            # '${{ steps.preview.output.message }}'
 
