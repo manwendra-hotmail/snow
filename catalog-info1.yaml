@@ -75,7 +75,7 @@ spec:
             <tbody>
               {{#each steps.transform.output.result}}
                 <tr>
-                  <td><a href="https://<your-instance>.service-now.com/incident.do?sys_id={{ this.url }}" target="_blank">{{ this.number }}</a></td>
+                  <td><a href="https://ibmksademo1.service-now.com/incident.do?sys_id={{ this.url }}" target="_blank">{{ this.number }}</a></td>
                   <td>{{ this.short_description }}</td>
                   <td>{{ this.state }}</td>
                   <td>{{ this.priority }}</td>
