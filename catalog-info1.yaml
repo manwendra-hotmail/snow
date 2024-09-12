@@ -53,34 +53,38 @@ spec:
             "short_description": $ticket.short_description,
             "state": $ticket.incident_state,
             "priority": $ticket.priority,
-            "opened_by": $ticket.opened_by.display_value,
-            "url": $ticket.sys_id
+            "opened_by": $ticket.opened_by.display_value
           }
         })
 
-  output: 
-    text: 
+  output:
+    text:
       - title: Incidents
         content: |
-          <table>
-            <thead>
-              <tr>
-                <th>INC Number</th>
-                <th>Description</th>
-                <th>State</th>
-                <th>Priority</th>
-                <th>Opened By</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each steps.transform.output.result}}
-                <tr>
-                  <td><a href="https://ibmksademo1.service-now.com/incident.do?sys_id={{ this.url }}" target="_blank">{{ this.number }}</a></td>
-                  <td>{{ this.short_description }}</td>
-                  <td>{{ this.state }}</td>
-                  <td>{{ this.priority }}</td>
-                  <td>{{ this.opened_by }}</td>
-                </tr>
-              {{/each}}
-            </tbody>
-          </table>
+          <html>
+            <body>
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>INC Number</th>
+                    <th>Description</th>
+                    <th>State</th>
+                    <th>Priority</th>
+                    <th>Opened By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each steps.transform.output.result}}
+                    <tr>
+                      <td>{{ this.number }}</td>
+                      <td>{{ this.short_description }}</td>
+                      <td>{{ this.state }}</td>
+                      <td>{{ this.priority }}</td>
+                      <td>{{ this.opened_by }}</td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </body>
+          </html>
+          
