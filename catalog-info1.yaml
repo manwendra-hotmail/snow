@@ -49,11 +49,14 @@ spec:
       expression: >
         $map($, function($ticket) {
           {
-            "number": $ticket.number,
-            "short_description": $ticket.short_description,
-            "state": $ticket.incident_state,
-            "priority": $ticket.priority,
-            "opened_by": $ticket.opened_by.display_value
+            "line": concat(
+              "INC Number: ", $ticket.number, "\n",
+              "Description: ", $ticket.short_description, "\n",
+              "State: ", $ticket.incident_state, "\n",
+              "Priority: ", $ticket.priority, "\n",
+              "Opened By: ", $ticket.opened_by.display_value, "\n",
+              "------------------------\n"
+            )
           }
         })
 
@@ -61,12 +64,6 @@ spec:
     text:
       - title: Incidents
         content: |
-          Incidents
           {{#each steps.transform.output.result}}
-          INC Number: {{ this.number }}
-          Description: {{ this.short_description }}
-          State: {{ this.state }}
-          Priority: {{ this.priority }}
-          Opened By: {{ this.opened_by }}
-          ------------------------
+          {{ this.line }}
           {{/each}}
