@@ -111,19 +111,19 @@ spec:
               </tr>
             </thead>
             <tbody>
-              ${{ steps.transform.output.result | $map((ticket) => `
+              {{#each steps.transform.output.result}}
                 <tr>
-                  <td>${ticket.number}</td>
-                  <td>${ticket.short_description}</td>
-                  <td>${ticket.state}</td>
-                  <td>${ticket.priority}</td>
-                  <td>${ticket.opened_by}</td>
+                  <td>{{{ this.number }}}</td>
+                  <td>{{ this.short_description }}</td>
+                  <td>{{ this.state }}</td>
+                  <td>{{ this.priority }}</td>
+                  <td>{{ this.opened_by }}</td>
                 </tr>
-              `) | $join('') }}
+              {{/each}}
             </tbody>
           </table>
 
-  
+
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
