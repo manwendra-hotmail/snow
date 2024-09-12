@@ -59,7 +59,7 @@ spec:
         title: Table Name
         type: string
         default: 'incident'
-        description: Name of the ServiceNow table to fetch records from (e.g., incident)
+        description: Name of the ServiceNow table to fetch records from (e.g., `incident`)
   steps:
   - id: fetch
     name: Fetch Incident Tickets
@@ -68,48 +68,61 @@ spec:
       tableName: ${{ parameters.tableName }}
 
   - id: serialize
-    name: serialize
+    name: Serialize Tickets
     action: roadiehq:utils:serialize:json
     input:
       data:
         tickets: '${{ steps.fetch.output.result }}'
 
   - id: write
-    name: Write
-    action: roadiehq:utils:fs:write  # (Optional, can be removed)
+    name: Write to File
+    action: roadiehq:utils:fs:write
     input:
-      path: ./data.json  # (Optional, remove if not used)
-      content: ${{ steps.serialize.output.serialized }}  # (Optional, remove if not used)
+      path: ./data.json
+      content: ${{ steps.serialize.output.serialized }}
 
   - id: transform
-    name: Transform to Tabular Format
+    name: Transform to HTML Table
     action: roadiehq:utils:jsonata:json:transform
     input:
-      path: ${{ steps['fetch'].output.result }}  # Access data directly from fetch step (optional)
-      expression: |
-        # Extract desired fields from each ticket object
-        $tickets[] | {
-          # Customize field names and formatting as needed
-          "Number": .number,
-          "Short Description": .short_description,
-          "State": .state,
-          # Add more fields here, adjusting formatting accordingly
-        }
-        # Group objects into a single array for tabular representation
-        | reduce { accumulator: [], current: $ } (acc, curr) => acc + [curr]
+      path: ${{ steps['write'].output.path }}
+      expression: >
+        $map($, function($ticket) {
+          {
+            "number": $ticket.number,
+            "short_description": $ticket.short_description,
+            "state": $ticket.incident_state,
+            "priority": $ticket.priority,
+            "opened_by": $ticket.opened_by.display_value
+          }
+        })
 
-  output:
-    table:  # Use the 'table' output type
-      headers:
-        - title: Number
-        - title: Short Description
-        - title: State
-      rows:
-        # Access transformed data from 'transform' step
-        from: ${{ steps.transform.output.result }}
-        # Extract specific fields from each object
-        select: [ .Number, .["Short Description"], .State, ]
-        
+  output: 
+    text: 
+      - title: Incidents
+        content: |
+          <table>
+            <thead>
+              <tr>
+                <th>INC Number</th>
+                <th>Description</th>
+                <th>State</th>
+                <th>Priority</th>
+                <th>Opened By</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each steps.transform.output.result}}
+                <tr>
+                  <td>{{ this.number }}</td>
+                  <td>{{ this.short_description }}</td>
+                  <td>{{ this.state }}</td>
+                  <td>{{ this.priority }}</td>
+                  <td>{{ this.opened_by }}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
