@@ -88,7 +88,7 @@ spec:
         expression: >
           $map($, function($ticket) {
             {
-              "number": "<a href=\"https://your-servicenow-instance.com/nav_to.do?uri=incident.do?sys_id=" & $ticket.sys_id & "\">" & $ticket.number & "</a>",
+              "number": "<a href=\"https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=" & $ticket.sys_id & "\">" & $ticket.number & "</a>",
               "short_description": $ticket.short_description,
               "state": $ticket.incident_state,
               "priority": $ticket.priority,
