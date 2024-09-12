@@ -42,7 +42,7 @@ spec:
       content: ${{ steps.serialize.output.serialized }}
 
   - id: transform
-    name: Transform to HTML Table
+    name: Transform to Text
     action: roadiehq:utils:jsonata:json:transform
     input:
       path: ${{ steps['write'].output.path }}
@@ -61,30 +61,12 @@ spec:
     text:
       - title: Incidents
         content: |
-          <html>
-            <body>
-              <table border="1">
-                <thead>
-                  <tr>
-                    <th>INC Number</th>
-                    <th>Description</th>
-                    <th>State</th>
-                    <th>Priority</th>
-                    <th>Opened By</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each steps.transform.output.result}}
-                    <tr>
-                      <td>{{ this.number }}</td>
-                      <td>{{ this.short_description }}</td>
-                      <td>{{ this.state }}</td>
-                      <td>{{ this.priority }}</td>
-                      <td>{{ this.opened_by }}</td>
-                    </tr>
-                  {{/each}}
-                </tbody>
-              </table>
-            </body>
-          </html>
-          
+          Incidents
+          {{#each steps.transform.output.result}}
+          INC Number: {{ this.number }}
+          Description: {{ this.short_description }}
+          State: {{ this.state }}
+          Priority: {{ this.priority }}
+          Opened By: {{ this.opened_by }}
+          ------------------------
+          {{/each}}
