@@ -96,6 +96,12 @@ spec:
             }
           })
 
+    - id: log
+      name: Log Data
+      action: roadiehq:utils:log
+      input:
+        message: "${{ steps.transform.output.result }}"
+
   output:
     text:
       - title: View Incidents
