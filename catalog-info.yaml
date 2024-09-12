@@ -59,7 +59,7 @@ spec:
         title: Table Name
         type: string
         default: 'incident'
-        description: Name of the ServiceNow table to fetch records from (e.g., `incident`)
+        description: Name of the ServiceNow table to fetch records from (e.g., incident)
   steps:
   - id: fetch
     name: Fetch Incident Tickets
@@ -68,62 +68,33 @@ spec:
       tableName: ${{ parameters.tableName }}
 
   - id: serialize
-    name: Serialize Tickets
+    name: serialize
     action: roadiehq:utils:serialize:json
     input:
       data:
         tickets: '${{ steps.fetch.output.result }}'
-
+        
   - id: write
-    name: Write to File
+    name: Write
     action: roadiehq:utils:fs:write
     input:
       path: ./data.json
       content: ${{ steps.serialize.output.serialized }}
 
   - id: transform
-    name: Transform to HTML Table
+    name: transform
     action: roadiehq:utils:jsonata:json:transform
     input:
       path: ${{ steps['write'].output.path }}
-      expression: >
-        $map($, function($ticket) {
-          {
-            "number": $ticket.number,
-            "short_description": $ticket.short_description,
-            "state": $ticket.incident_state,
-            "priority": $ticket.priority,
-            "opened_by": $ticket.opened_by.display_value
-          }
-        })
-
+      expression: '$ ~> | $ | { "content": [*] }|'
+      
   output: 
     text: 
       - title: Incidents
         content: |
-          <table>
-            <thead>
-              <tr>
-                <th>INC Number</th>
-                <th>Description</th>
-                <th>State</th>
-                <th>Priority</th>
-                <th>Opened By</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each steps.transform.output.result}}
-                <tr>
-                  <td>{{ this.number }}</td>
-                  <td>{{ this.short_description }}</td>
-                  <td>{{ this.state }}</td>
-                  <td>{{ this.priority }}</td>
-                  <td>{{ this.opened_by }}</td>
-                </tr>
-              {{/each}}
-            </tbody>
-          </table>
-          
+           ${{ steps['transform'].output.result }}
+           # '${{ steps.preview.output.message }}'
+
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
