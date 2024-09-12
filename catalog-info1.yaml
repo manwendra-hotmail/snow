@@ -1,0 +1,86 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: servicenow-fetch-template
+  title: ServiceNow Fetch Template
+  description: Fetch incidents from ServiceNow
+  tags:
+    - servicenow
+    - fetch
+spec:
+  owner: "manwendra-hotmail"
+  type: service
+  parameters:
+  - title: Provide table name information
+    required:
+     - tableName
+    properties:
+      tableName:
+        title: Table Name
+        type: string
+        default: 'incident'
+        description: Name of the ServiceNow table to fetch records from (e.g., `incident`)
+  steps:
+  - id: fetch
+    name: Fetch Incident Tickets
+    action: servicenow:now:table:retrieveRecords
+    input:
+      tableName: ${{ parameters.tableName }}
+
+  - id: serialize
+    name: Serialize Tickets
+    action: roadiehq:utils:serialize:json
+    input:
+      data:
+        tickets: '${{ steps.fetch.output.result }}'
+
+  - id: write
+    name: Write to File
+    action: roadiehq:utils:fs:write
+    input:
+      path: ./data.json
+      content: ${{ steps.serialize.output.serialized }}
+
+  - id: transform
+    name: Transform to HTML Table
+    action: roadiehq:utils:jsonata:json:transform
+    input:
+      path: ${{ steps['write'].output.path }}
+      expression: >
+        $map($, function($ticket) {
+          {
+            "number": $ticket.number,
+            "short_description": $ticket.short_description,
+            "state": $ticket.incident_state,
+            "priority": $ticket.priority,
+            "opened_by": $ticket.opened_by.display_value,
+            "url": $ticket.sys_id
+          }
+        })
+
+  output: 
+    text: 
+      - title: Incidents
+        content: |
+          <table>
+            <thead>
+              <tr>
+                <th>INC Number</th>
+                <th>Description</th>
+                <th>State</th>
+                <th>Priority</th>
+                <th>Opened By</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each steps.transform.output.result}}
+                <tr>
+                  <td><a href="https://<your-instance>.service-now.com/incident.do?sys_id={{ this.url }}" target="_blank">{{ this.number }}</a></td>
+                  <td>{{ this.short_description }}</td>
+                  <td>{{ this.state }}</td>
+                  <td>{{ this.priority }}</td>
+                  <td>{{ this.opened_by }}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
