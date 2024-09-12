@@ -89,8 +89,7 @@ spec:
       
   output: 
     text: 
-      - title: Tickets
-        content: |
+      - content: |
            ${{ steps['transform'].output.result }}
            # '${{ steps.preview.output.message }}'
 
