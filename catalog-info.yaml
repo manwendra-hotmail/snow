@@ -111,7 +111,15 @@ spec:
               </tr>
             </thead>
             <tbody>
-              ${{ steps.transform.output.result | $join(",") }}
+              ${{ steps.transform.output.result | $map((ticket) => `
+                <tr>
+                  <td>${ticket.number}</td>
+                  <td>${ticket.short_description}</td>
+                  <td>${ticket.state}</td>
+                  <td>${ticket.priority}</td>
+                  <td>${ticket.opened_by}</td>
+                </tr>
+              `) | $join('') }}
             </tbody>
           </table>
 
