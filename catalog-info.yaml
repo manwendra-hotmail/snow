@@ -71,7 +71,7 @@ spec:
     action: roadiehq:utils:serialize:json
     input:
       data:
-        tickets: '${{ steps.fetch.output.result }}'
+        tickets: ${{ steps.fetch.output.result }}
         
   - id: write
     name: Write
