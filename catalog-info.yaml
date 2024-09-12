@@ -123,6 +123,7 @@ spec:
               {{/each}}
             </tbody>
           </table>
+          
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
