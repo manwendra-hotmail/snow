@@ -36,7 +36,6 @@ spec:
   definition:
     $text: ./openapi.yaml
 
----
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
@@ -102,33 +101,34 @@ spec:
       input:
         message: "${{ steps.transform.output.result }}"
 
-output:
-  text:
-    - title: Incident Tickets
-      content: |
-        Incident Data: {{ steps.transform.output.result }}
-        
-        <table>
-          <thead>
-            <tr>
-              <th>INC Number</th>
-              <th>Description</th>
-              <th>State</th>
-              <th>Priority</th>
-              <th>Opened By</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ steps.transform.output.result[0].number }}</td>
-              <td>{{ steps.transform.output.result[0].short_description }}</td>
-              <td>{{ steps.transform.output.result[0].state }}</td>
-              <td>{{ steps.transform.output.result[0].priority }}</td>
-              <td>{{ steps.transform.output.result[0].opened_by }}</td>
-            </tr>
-          </tbody>
-        </table>
-
+  output:
+    text:
+      - title: Incident Tickets
+        content: |
+          Incident Data: {{ steps.transform.output.result }}
+          
+          <table>
+            <thead>
+              <tr>
+                <th>INC Number</th>
+                <th>Description</th>
+                <th>State</th>
+                <th>Priority</th>
+                <th>Opened By</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each steps.transform.output.result}}
+                <tr>
+                  <td>{{ this.number }}</td>
+                  <td>{{ this.short_description }}</td>
+                  <td>{{ this.state }}</td>
+                  <td>{{ this.priority }}</td>
+                  <td>{{ this.opened_by }}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
 
 
 ---
