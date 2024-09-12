@@ -108,7 +108,7 @@ spec:
         # Access transformed data from 'transform' step
         from: ${{ steps.transform.output.result }}
         # Extract specific fields from each object
-        select: [ .Number, .["Short Description"], .State ]
+        select: [ .Number, .["Short Description"], .State ],
         
 
 ---
