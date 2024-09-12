@@ -50,91 +50,63 @@ spec:
   owner: "manwendra-hotmail"
   type: service
   parameters:
-  - title: Provide table name information
-    required:
-     - tableName
-    properties:
-      tableName:
-        title: Table Name
-        type: string
-        default: 'incident'
-        description: Name of the ServiceNow table to fetch records from (e.g., `incident`)
+    - title: Provide table name information
+      required:
+        - tableName
+      properties:
+        tableName:
+          title: Table Name
+          type: string
+          default: 'incident'
+          description: Name of the ServiceNow table to fetch records from (e.g., `incident`)
   steps:
-  - id: fetch
-    name: Fetch Incident Tickets
-    action: servicenow:now:table:retrieveRecords
-    input:
-      tableName: ${{ parameters.tableName }}
+    - id: fetch
+      name: Fetch Incident Tickets
+      action: servicenow:now:table:retrieveRecords
+      input:
+        tableName: ${{ parameters.tableName }}
 
-  - id: serialize
-    name: serialize
-    action: roadiehq:utils:serialize:json
-    input:
-      data:
-        tickets: '${{ steps.fetch.output.result }}'
+    - id: serialize
+      name: Serialize Tickets
+      action: roadiehq:utils:serialize:json
+      input:
+        data:
+          tickets: '${{ steps.fetch.output.result }}'
 
-  - id: write
-    name: Write
-    action: roadiehq:utils:fs:write
-    input:
-      path: ./data.json
-      content: ${{ steps.serialize.output.serialized }}
-
-  - id: transform
-    name: Transform to HTML Table
-    action: roadiehq:utils:jsonata:json:transform
-    input:
-      path: ${{ steps['write'].output.path }}
-      expression: >
-        $map($, function($ticket) {
-          {
-            "number": "<a href=\"https://your-servicenow-instance.com/nav_to.do?uri=incident.do?sys_id=" & $ticket.sys_id & "\">" & $ticket.number & "</a>",
-            "short_description": $ticket.short_description,
-            "state": $ticket.incident_state,
-            "priority": $ticket.priority,
-            "opened_by": $ticket.opened_by.value
-          }
-        })
-        
-  - id: output
-    name: Output HTML Table
-    action: roadiehq:utils:fs:write
-    input:
-      path: ./output.html
-      content: |
-        <table>
-          <thead>
-            <tr>
-              <th>INC Number</th>
-              <th>Description</th>
-              <th>State</th>
-              <th>Priority</th>
-              <th>Opened By</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${{ steps.transform.output.result | $join(",") }}
-          </tbody>
-        </table>
-
-output:
-  text:
-    - title: View Incidents
-      content: |
-        <table>
-          <thead>
-            <tr>
-              <th>INC Number</th>
-              <th>Description</th>
-              <th>State</th>
-              <th>Priority</th>
-              <th>Opened By</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${{ steps.transform.output.result | $join(",") }}
-          </tbody>
-        </table>
+    - id: transform
+      name: Transform to HTML Table
+      action: roadiehq:utils:jsonata:json:transform
+      input:
+        json: ${{ steps['serialize'].output.serialized }}
+        expression: |
+          $map(tickets, function($ticket) {
+            {
+              "number": "<a href=\"https://your-servicenow-instance.com/nav_to.do?uri=incident.do?sys_id=" & $ticket.sys_id & "\">" & $ticket.number & "</a>",
+              "short_description": $ticket.short_description,
+              "state": $ticket.incident_state,
+              "priority": $ticket.priority,
+              "opened_by": $ticket.opened_by.value
+            }
+          })
+      
+  output:
+    text:
+      - title: Incidents Table
+        content: |
+          <table>
+            <thead>
+              <tr>
+                <th>INC Number</th>
+                <th>Description</th>
+                <th>State</th>
+                <th>Priority</th>
+                <th>Opened By</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${{ steps.transform.output.result | $join(",") }}
+            </tbody>
+          </table>
 
   
 ---
