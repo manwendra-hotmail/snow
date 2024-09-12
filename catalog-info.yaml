@@ -36,6 +36,7 @@ spec:
   definition:
     $text: ./openapi.yaml
 
+
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
@@ -72,42 +73,43 @@ spec:
     input:
       data:
         tickets: '${{ steps.fetch.output.result }}'
-        
+
   - id: write
     name: Write
-    action: roadiehq:utils:fs:write
+    action: roadiehq:utils:fs:write  # (Optional, can be removed)
     input:
-      path: ./data.json
-      content: ${{ steps.serialize.output.serialized }}
+      path: ./data.json  # (Optional, remove if not used)
+      content: ${{ steps.serialize.output.serialized }}  # (Optional, remove if not used)
 
   - id: transform
-    name: transform
+    name: Transform to Tabular Format
     action: roadiehq:utils:jsonata:json:transform
     input:
-      path: ${{ steps['write'].output.path }}
+      path: ${{ steps['fetch'].output.result }}  # Access data directly from fetch step (optional)
       expression: |
-        $map($, function($v, $i, $a) {
-          {
-            "INC Number": "<a href='https://your-instance.service-now.com/nav_to.do?uri=incident.do?sys_id=" & $v.sys_id & "'>" & $v.number & "</a>",
-            "Short Description": $v.short_description,
-            "State": $v.state,
-            "Assigned To": $v.assigned_to.display_value
-          }
-        })
+        # Extract desired fields from each ticket object
+        $tickets[] | {
+          # Customize field names and formatting as needed
+          "Number": .number,
+          "Short Description": .short_description,
+          "State": .state,
+          # Add more fields here, adjusting formatting accordingly
+        }
+        # Group objects into a single array for tabular representation
+        | reduce { accumulator: [], current: $ } (acc, curr) => acc + [curr]
 
-  - id: writeTransformed
-    name: Write Transformed Data
-    action: roadiehq:utils:fs:write
-    input:
-      path: ./transformed_data.json
-      content: ${{ steps.transform.output.result }}
-
-  output: 
-    text: 
-      - title: Incidents
-        content: |
-           ${{ steps['writeTransformed'].output.path }}
-
+  output:
+    table:  # Use the 'table' output type
+      headers:
+        - title: Number
+        - title: Short Description
+        - title: State
+      rows:
+        # Access transformed data from 'transform' step
+        from: ${{ steps.transform.output.result }}
+        # Extract specific fields from each object
+        select: [ .Number, .["Short Description"], .State ]
+        
 
 ---
 apiVersion: scaffolder.backstage.io/v1beta3
