@@ -104,9 +104,9 @@ spec:
 
   output:
     text:
-      - title: View Incidents
+      - title: Incident Tickets
         content: |
-          <table>
+          {{ steps.transform.output.result }}
             <thead>
               <tr>
                 <th>INC Number</th>
@@ -117,19 +117,15 @@ spec:
               </tr>
             </thead>
             <tbody>
-              {{#each steps.transform.output.result}}
-                <tr>
-                  <td>{{this.number}}</td>
-                  <td>{{this.short_description}}</td>
-                  <td>{{this.state}}</td>
-                  <td>{{this.priority}}</td>
-                  <td>{{this.opened_by.value}}</td>
-                </tr>
-              {{/each}}
+              <tr>
+                <td>{{ steps.transform.output.result[0].number }}</td>
+                <td>{{ steps.transform.output.result[0].short_description }}</td>
+                <td>{{ steps.transform.output.result[0].state }}</td>
+                <td>{{ steps.transform.output.result[0].priority }}</td>
+                <td>{{ steps.transform.output.result[0].opened_by.value }}</td>
+              </tr>
             </tbody>
           </table>
-
-
 
 
 ---
