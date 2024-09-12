@@ -73,13 +73,20 @@ spec:
         data:
           tickets: '${{ steps.fetch.output.result }}'
 
+    - id: write
+      name: Write Tickets to File
+      action: roadiehq:utils:fs:write
+      input:
+        path: ./data.json
+        content: ${{ steps.serialize.output.serialized }}
+
     - id: transform
       name: Transform to HTML Table
       action: roadiehq:utils:jsonata:json:transform
       input:
-        json: ${{ steps['serialize'].output.serialized }}
-        expression: |
-          $map(tickets, function($ticket) {
+        path: ${{ steps['write'].output.path }}
+        expression: >
+          $map($, function($ticket) {
             {
               "number": "<a href=\"https://your-servicenow-instance.com/nav_to.do?uri=incident.do?sys_id=" & $ticket.sys_id & "\">" & $ticket.number & "</a>",
               "short_description": $ticket.short_description,
@@ -88,10 +95,10 @@ spec:
               "opened_by": $ticket.opened_by.value
             }
           })
-      
+
   output:
     text:
-      - title: Incidents Table
+      - title: View Incidents
         content: |
           <table>
             <thead>
