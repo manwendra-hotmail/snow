@@ -117,10 +117,24 @@ spec:
           </tbody>
         </table>
 
-  output:
-    links:
-      - title: View Incidents
-        url: ./output.html
+output:
+  text:
+    - title: View Incidents
+      content: |
+        <table>
+          <thead>
+            <tr>
+              <th>INC Number</th>
+              <th>Description</th>
+              <th>State</th>
+              <th>Priority</th>
+              <th>Opened By</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${{ steps.transform.output.result | $join(",") }}
+          </tbody>
+        </table>
 
   
 ---
