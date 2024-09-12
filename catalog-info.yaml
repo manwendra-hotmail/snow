@@ -92,8 +92,6 @@ spec:
       - title: Incidents
         content: |
            ${{ steps['transform'].output.result }}
-           # '${{ steps.preview.output.message }}'
-
 
   
 ---
