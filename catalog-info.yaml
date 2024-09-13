@@ -220,7 +220,7 @@ spec:
     action: roadiehq:utils:jsonata:json:transform
     input:
       path: ${{ steps['write'].output.path }}
-      expression: '{"incidents": [content.tickets.{"number": number, "description": short_description ,"State": incident_state, "active": active,"priority": priority,"Created By": sys_created_by,"ticket-link": "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id="&sys_id}]}'
+      expression: '{"incidents": [tickets.{"number": number, "description": short_description ,"State": incident_state, "active": active,"priority": priority,"Created By": sys_created_by,"ticket-link": "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id="&sys_id}]}'
   output: 
     text: 
       - title: Tickets
