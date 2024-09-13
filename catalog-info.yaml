@@ -226,7 +226,7 @@ spec:
     text: 
       - title: Tickets
         content: | 
-          ${{ steps['transform'].output.result | dump(2) }}
+          ${{ steps['transform'].output.result }}
     
 
 
