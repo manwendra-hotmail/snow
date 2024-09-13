@@ -170,3 +170,60 @@ spec:
   output:
     ticketUrl: https://ibmksademo1.service-now.com/nav_to.do?uri=${{ parameters.tableName }}.do?sys_id=${{ parameters.sysId }}
     result: ${{ steps.update.output }}
+---
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: servicenow-fetch-template
+  title: ServiceNow Fetch Template
+  description: Fetch incidents from ServiceNow
+  tags:
+    - servicenow
+    - fetch
+spec:
+  owner: "manwendra-hotmail"
+  type: service
+  parameters:
+  - title: Provide table name information
+    required:
+     - tableName
+    properties:
+      tableName:
+        title: Table Name
+        type: string
+        default: 'incident'
+        description: Name of the ServiceNow table to fetch records from (e.g., `incident`)
+  steps:
+  - id: fetch
+    name: Fetch Incident Tickets
+    action: servicenow:now:table:retrieveRecords
+    input:
+      tableName: ${{ parameters.tableName }}
+
+  - id: serialize
+    name: Serialize Tickets
+    action: roadiehq:utils:serialize: yaml
+    input:
+      data:
+        tickets: '${{ steps.fetch.output.result }}'
+
+  - id: write
+    name: Write to File
+    action: roadiehq:utils:fs:write
+    input:
+      path: ./data.json
+      content: ${{ steps.serialize.output.serialized }}
+
+  - id: transform
+    name: Transform to Text
+    action: roadiehq:utils:jsonata: yaml:transform
+    input:
+      path: ${{ steps['write'].output.path }}
+      expression: '{"incidents": [tickets.{"number": number, "description": short_description ,"State": incident_state, "active": active,"priority": priority,"Created By": sys_created_by,"ticket-link": "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id="&sys_id}]}'
+  output: 
+    text: 
+      - title: Tickets
+        content: |
+           ${{ steps['transform'].output.result }}
+
+
