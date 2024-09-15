@@ -223,7 +223,6 @@ spec:
       path: ${{ steps['write'].output.path }}
       expression: '{"incidents": [tickets.{"number": number, "description": short_description ,"State": incident_state, "active": active,"priority": priority,"Created By": sys_created_by,"ticket-link": "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id="&sys_id}]}'
   output:
-    yaml: ${{ steps['transform'].output.result }}
     text: 
       - title: Tickets
         content: |
