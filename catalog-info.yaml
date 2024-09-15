@@ -226,63 +226,63 @@ spec:
     text: 
       - title: Tickets
         content: | 
-          "incidents:
+          'incidents:
     -
         number: INC0010003
-        description: 'Test Ticket for SBX Developer Hub POC'
-        State: '7'
-        active: 'false'
-        priority: '5'
-        'Created By': Rakesh
-        ticket-link: 'https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=c76bd30b3bd4d690f7db026aa5e45ab5'
+        description: "Test Ticket for SBX Developer Hub POC"
+        State: "7"
+        active: "false"
+        priority: "5"
+        "Created By": Rakesh
+        ticket-link: "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=c76bd30b3bd4d690f7db026aa5e45ab5"
     -
         number: INC0010014
-        description: 'Ticket4 - Unable to create tickets in SNOW from RHDH'
-        State: '1'
-        active: 'true'
-        priority: '5'
-        'Created By': Rakesh
-        ticket-link: 'https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=25b41d393b68d210f7db026aa5e45ac9'
+        description: "Ticket4 - Unable to create tickets in SNOW from RHDH"
+        State: "1"
+        active: "true"
+        priority: "5"
+        "Created By": Rakesh
+        ticket-link: "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=25b41d393b68d210f7db026aa5e45ac9"
     -
         number: INC0010015
-        description: 'Testing update action from RHDH'
-        State: '1'
-        active: 'true'
-        priority: '5'
-        'Created By': Rakesh
-        ticket-link: 'https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=7235d1f93b68d210f7db026aa5e45a4e'
+        description: "Testing update action from RHDH"
+        State: "1"
+        active: "true"
+        priority: "5"
+        "Created By": Rakesh
+        ticket-link: "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=7235d1f93b68d210f7db026aa5e45a4e"
     -
         number: INC0010007
-        description: 'I have raised this ticket by mistake, please mark it as resolved. Thanks!'
-        State: '1'
-        active: 'true'
-        priority: '5'
-        'Created By': Rakesh
-        ticket-link: 'https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=7f43b43933e09610be43ca989d5c7b76'
+        description: "I have raised this ticket by mistake, please mark it as resolved. Thanks!"
+        State: "1"
+        active: "true"
+        priority: "5"
+        "Created By": Rakesh
+        ticket-link: "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=7f43b43933e09610be43ca989d5c7b76"
     -
         number: INC0010008
-        description: 'Ticket2 - Unable to create tickets in SNOW from RHDH'
-        State: '1'
-        active: 'true'
-        priority: '5'
-        'Created By': Rakesh
-        ticket-link: 'https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=8f76f8b53ba4d210f7db026aa5e45a8d'
+        description: "Ticket2 - Unable to create tickets in SNOW from RHDH"
+        State: "1"
+        active: "true"
+        priority: "5"
+        "Created By": Rakesh
+        ticket-link: "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=8f76f8b53ba4d210f7db026aa5e45a8d"
     -
         number: INC0010010
-        description: 'Ticket3 - Unable to create tickets in SNOW from RHDH'
-        State: '1'
-        active: 'true'
-        priority: '5'
-        'Created By': Rakesh
-        ticket-link: 'https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=ec59f8b93ba4d210f7db026aa5e45a24'
+        description: "Ticket3 - Unable to create tickets in SNOW from RHDH"
+        State: "1"
+        active: "true"
+        priority: "5"
+        "Created By": Rakesh
+        ticket-link: "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=ec59f8b93ba4d210f7db026aa5e45a24"
     -
         number: INC0010011
         description: RH-Catalog
-        State: '1'
-        active: 'true'
-        priority: '5'
-        'Created By': Rakesh
-        ticket-link: 'https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=f22afc7d3ba4d210f7db026aa5e45aa9'" \
+        State: "1"
+        active: "true"
+        priority: "5"
+        "Created By": Rakesh
+        ticket-link: "https://ibmksademo1.service-now.com/nav_to.do?uri=incident.do?sys_id=f22afc7d3ba4d210f7db026aa5e45aa9" ' \
           ${{ steps['transform'].output.result }}
     
 
